@@ -169,10 +169,12 @@
         requestAnimationFrame( render );
 
         if ( ! options.fixed ) {
-
-          upd_view(obj_pos,12);
-
+          group.rotation.x+=0.005;
+          group.rotation.y+=0.005;
         }
+        
+        
+        upd_view(obj_pos,12);
 
         renderer.render( scene, camera );
 
