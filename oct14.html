@@ -113,7 +113,7 @@
       var ang2ongroundvec=ang2vecxz;
       
       var make_matrix_from=(pos,dir)=>{
-        cam_pos=pos.clone().sub(dir.normalize().multiplyScalar(cam_dist));
+        var cam_pos=pos.clone().sub(dir.normalize().multiplyScalar(cam_dist));
         camera.position.fromArray(cam_pos.toArray());
         camera.lookAt(pos);
         //console.log(pos);
@@ -129,12 +129,46 @@
 
       var on_drag=(dx,dy)=>g_xang+=dx*some_koef;
       //---
-      var point=new THREE.Vector3(10,0,-1);
-      var cam_pos=new THREE.Vector3(16,0,30);
+      //var point=new THREE.Vector3(10,0,-1);
+      //var cam_pos=new THREE.Vector3(0,0,0);//
 			
-      var vector = new THREE.Vector3(0.3070027799227584,-5.639549576426183e-17,-0.9517086177605509);
+      //var vector = new THREE.Vector3(0.3070027799227584,-5.639549576426183e-17,-0.9517086177605509);
+      var on_drag=(dx,dy)=>g_xang+=-dx*some_koef;
+      var mpos=[0,0];var mdown=false;
       
-      
+      var ctrl={    
+        onmousedown:function(event){
+          var x=event.clientX;var y=event.clientY;
+          mpos[0]=x;mpos[1]=y;
+          mdown=true;
+          console.log(x,y);
+        },
+        onmousemove:function (event){
+          var x=event.clientX;var y=event.clientY;
+          if(!mdown)return;
+          var dx=mpos[0]-x;var dy=mpos[1]-y;
+          on_drag(dx,dy);
+          mpos[0]=x;mpos[1]=y;
+          console.log(x,y);
+        },    
+        onmouseup:function onmouseup(event) {
+          var dx=mpos[0]-x;var dy=mpos[1]-y;
+          on_drag(dx,dy);
+          mpos[0]=x;mpos[1]=y;
+          mdown=false;
+          //console.log(x,y);
+        }
+      };
+      //console.log(ctrl);
+      var d=renderer.domElement;
+      d.onmousedown=ctrl.onmousedown;
+      d.onmousemove=ctrl.onmousemove;
+      d.onmouseup=ctrl.onmouseup;
+      /*
+      d.addEventListener("onmousedown", ctrl.onmousedown,false);
+      d.addEventListener("onmousemove", ctrl.onmousemove,false);
+      d.addEventListener("onmouseup", ctrl.onmouseup,false); 
+      */
       var render = function () {
 
 				requestAnimationFrame( render );
@@ -143,8 +177,8 @@
 
 					//group.rotation.x += 0.005;
 					//group.rotation.y += 0.005;
-          g_xang+=0.007;
-          upd_view(obj_pos,16);
+          //g_xang+=0.007;
+          upd_view(obj_pos,12);
           //camera.position.fromArray(cam_pos.toArray());
           //camera.lookAt(point);
           //vector.applyQuaternion( camera.quaternion );
