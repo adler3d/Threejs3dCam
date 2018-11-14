@@ -141,7 +141,7 @@
           var x=event.clientX;var y=event.clientY;
           mpos[0]=x;mpos[1]=y;
           mdown=true;
-          console.log(x,y);
+          //console.log(x,y);
         },
         onmousemove:function (event){
           var x=event.clientX;var y=event.clientY;
@@ -149,11 +149,11 @@
           var dx=mpos[0]-x;var dy=mpos[1]-y;
           on_drag(dx,dy);
           mpos[0]=x;mpos[1]=y;
-          console.log(x,y);
+          //console.log(x,y);
         },    
         onmouseup:function onmouseup(event) {
           var dx=mpos[0]-x;var dy=mpos[1]-y;
-          on_drag(dx,dy);
+          //on_drag(dx,dy);
           mpos[0]=x;mpos[1]=y;
           mdown=false;
           //console.log(x,y);
